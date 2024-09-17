@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-construction-selection',
@@ -12,13 +14,13 @@ export class ConstructionSelectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // private _formBuilder = inject(FormBuilder);
+  private _formBuilder = inject(FormBuilder);
 
-  // firstFormGroup = this._formBuilder.group({
-  //   firstCtrl: ['', Validators.required],
-  // });
-  // secondFormGroup = this._formBuilder.group({
-  //   secondCtrl: ['', Validators.required],
-  // });
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
 
 }

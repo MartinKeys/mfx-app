@@ -8,9 +8,6 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ConstructionModule } from './modules/construction/construction.module';
-import { Visualization3dModule } from './modules/visualization3d/visualization3d.module';
-import { ChartsModule } from './modules/charts/charts.module';
-import { PdfExportModule } from './modules/pdf-export/pdf-export.module';
 
 @NgModule({
   imports: [
@@ -22,9 +19,6 @@ import { PdfExportModule } from './modules/pdf-export/pdf-export.module';
     RouterModule,
     AppRoutingModule,
     ConstructionModule,
-    Visualization3dModule,
-    ChartsModule,
-    PdfExportModule,
   ],
   declarations: [
     AppComponent,

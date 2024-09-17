@@ -3350,8 +3350,8 @@ tbody.collapse.show {
             box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25); }
     .custom-file-input:focus ~ .custom-file-control::before {
       border-color: #9acffa; }
-  .custom-file-input:lang(en) ~ .custom-file-label::after {
-    content: "Browse"; }
+  /* .custom-file-input:lang(en) ~ .custom-file-label::after {
+    content: "Browse"; } */
 
 .custom-file-label {
   position: absolute;

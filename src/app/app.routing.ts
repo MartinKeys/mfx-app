@@ -11,14 +11,6 @@ const routes: Routes =[
     redirectTo: 'dashboard',
     pathMatch: 'full',
   }, 
-  // {
-  //   path: '',
-  //   component: AdminLayoutComponent,
-  //   children: [{
-  //     path: '',
-  //     loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
-  //   }]
-  // }
   {
     path: '',
     component: AdminLayoutComponent,
@@ -30,19 +22,7 @@ const routes: Routes =[
       {
         path: 'construction',
         loadChildren: () => import('./modules/construction/construction.module').then(m => m.ConstructionModule)
-      },
-      {
-        path: 'visualization3d',
-        loadChildren: () => import('./modules/visualization3d/visualization3d.module').then(m => m.Visualization3dModule)
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./modules/charts/charts.module').then(m => m.ChartsModule)
-      },
-      {
-        path: 'pdf-export',
-        loadChildren: () => import('./modules/pdf-export/pdf-export.module').then(m => m.PdfExportModule)
-      },
+      }
       // ... other routes
     ]
   },
