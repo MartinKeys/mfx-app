@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NavItem } from './nav-item';
 import { Router } from '@angular/router';
-import { NavService } from '../../../../services/nav.service';
+import { NavService } from '../../../services/nav.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
