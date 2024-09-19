@@ -5,13 +5,13 @@ export const navItems: NavItem[] = [
     navCap: 'Menu',
   },
   {
-    displayName: 'Dashboard',
-    iconName: 'solar:widget-add-line-duotone',
-    route: '/dashboard',
+    displayName: 'Home',
+    iconName: 'entypo:home',
+    route: '/home',
   },
   {
     displayName: 'Construction',
-    iconName: 'solar:widget-add-line-duotone',
+    iconName: 'ic:round-construction',
     route: '/construction',
   },
   {
@@ -20,8 +20,18 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Construction Settings',
-    iconName: 'solar:archive-minimalistic-line-duotone',
+    iconName: 'iconamoon:component-fill',
     route: 'construction-settings',
+  },
+  {
+    displayName: 'Construction Results',
+    iconName: 'iconamoon:component-fill',
+    route: 'construction-results',
+  },
+  {
+    displayName: 'Visualisation',
+    iconName: 'iconamoon:component-fill',
+    route: 'visualisation',
   },
   
 ];

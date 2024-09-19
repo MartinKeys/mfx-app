@@ -8,9 +8,9 @@ export const PagesRoutes: Routes = [
     path: '',
     component: StarterComponent,
     data: {
-      title: 'Starter',
+      title: 'Home',
       urls: [
-        { title: 'Dashboard', url: '/dashboard' },
+        { title: 'Home', url: '/home' },
       ],
     },
   }
