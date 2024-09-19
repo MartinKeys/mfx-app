@@ -1,4 +1,80 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper>
+  <!-- First Step: Construction Type -->
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Select Construction Type</ng-template>
+      <div>
+        <button mat-icon-button (click)="setConstructionType(1)">
+          <mat-icon>build</mat-icon>
+        </button>
+        <button mat-icon-button (click)="setConstructionType(2)">
+          <mat-icon>construction</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button mat-button matStepperNext [disabled]="!firstFormGroup.valid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Second Step: Profile Length -->
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Select Profile Length</ng-template>
+      <mat-button-toggle-group formControlName="profileLength" appearance="legacy">
+        <mat-button-toggle *ngFor="let length of [200, 300, 400, 450, 600]" [value]="length">
+          {{ length }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="!secondFormGroup.valid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Third Step: Load Type -->
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Select Load Type</ng-template>
+      <div>
+        <button mat-icon-button (click)="setLoadType(1)">
+          <mat-icon>filter_1</mat-icon>
+        </button>
+        <button mat-icon-button (click)="setLoadType(2)">
+          <mat-icon>filter_2</mat-icon>
+        </button>
+        <button mat-icon-button (click)="setLoadType(3)">
+          <mat-icon>filter_3</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="!thirdFormGroup.valid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Fourth Step: Profile Type -->
+  <mat-step [stepControl]="fourthFormGroup">
+    <form [formGroup]="fourthFormGroup">
+      <ng-template matStepLabel>Select Profile Type</ng-template>
+      <mat-form-field>
+        <mat-label>Profile Type</mat-label>
+        <mat-select formControlName="profileType" required>
+          <mat-option value="28/30">28/30</mat-option>
+          <mat-option value="27/18">27/18</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>
+
+<!-- <mat-stepper orientation="vertical" [linear]="true" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Fill out your name</ng-template>
@@ -33,4 +109,4 @@
         <button mat-button (click)="stepper.reset()">Reset</button>
       </div>
     </mat-step>
-  </mat-stepper>
+  </mat-stepper> -->
