@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { StarterComponent } from './starter/starter.component';
 import { ConstructionComponent } from './construction/construction.component';
+import { ConstructionSettingsComponent } from '../components/construction-settings/construction-settings.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -12,15 +13,5 @@ export const PagesRoutes: Routes = [
         { title: 'Dashboard', url: '/dashboard' },
       ],
     },
-  },
-  {
-    path: 'construction',
-    component: ConstructionComponent,
-    data: {
-      title: 'Construction',
-      urls: [
-        { title: 'Construction', url: '/construction' },
-      ],
-    },
-  },
+  }
 ];

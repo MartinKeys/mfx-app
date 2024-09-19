@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 import { FullComponent } from './layout/full.component';
+import { StarterComponent } from './pages/starter/starter.component';
+import { ConstructionComponent } from './pages/construction/construction.component';
+import { ConstructionSettingsComponent } from './components/construction-settings/construction-settings.component';
 
 export const routes: Routes = [
   {
@@ -13,13 +16,15 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',
-        loadChildren: () =>
-          import('./pages/pages.routes').then((m) => m.PagesRoutes),
+        component: StarterComponent,
       },
       {
         path: 'construction',
-        loadChildren: () =>
-          import('./pages/pages.routes').then((m) => m.PagesRoutes),
+        component: ConstructionComponent,
+      },
+      {
+        path: 'construction-settings',
+        component: ConstructionSettingsComponent,
       },
     ],
   },
