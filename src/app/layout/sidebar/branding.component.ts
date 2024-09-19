@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
           src="./assets/images/logos/logo.svg"
           class="align-middle m-2"
           alt="logo"
-          width="200" 
+          width="180" 
           height="50"
         />
       </a>
