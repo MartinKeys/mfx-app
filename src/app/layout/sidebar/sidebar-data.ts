@@ -2,7 +2,7 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
+    navCap: 'Menu',
   },
   {
     displayName: 'Dashboard',
@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
     route: '/dashboard',
   },
   {
-    navCap: 'MFX Support',
+    navCap: 'Components',
     divider: true
   },
   // {
