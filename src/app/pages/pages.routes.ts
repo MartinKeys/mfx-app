@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { StarterComponent } from './starter/starter.component';
+import { ConstructionComponent } from './construction/construction.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -9,7 +10,16 @@ export const PagesRoutes: Routes = [
       title: 'Starter',
       urls: [
         { title: 'Dashboard', url: '/dashboard' },
-        { title: 'Starter' },
+      ],
+    },
+  },
+  {
+    path: 'construction',
+    component: ConstructionComponent,
+    data: {
+      title: 'Construction',
+      urls: [
+        { title: 'Construction', url: '/construction' },
       ],
     },
   },
