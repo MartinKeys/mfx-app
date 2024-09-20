@@ -1,7 +1,8 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MaterialModule } from 'src/app/material.module';
 import { FormBuilder, Validators, NonNullableFormBuilder } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-construction-settings',
@@ -14,6 +15,8 @@ import { NgFor } from '@angular/common';
   styleUrl: './construction-settings.component.scss'
 })
 export class ConstructionSettingsComponent {
+
+  @ViewChild('stepper') private myStepper: MatStepper;
 
   private _formBuilder = inject(FormBuilder) as NonNullableFormBuilder;
 
@@ -40,16 +43,50 @@ export class ConstructionSettingsComponent {
     // Subscribe to value changes and log parameters using non-null assertion operator
     this.firstFormGroup.get('constructionType')!.valueChanges.subscribe((value) => {
       this.constructionType = Number(value);
-      this.logParameters();
     });
     this.secondFormGroup.get('profileLength')!.valueChanges.subscribe((value) => {
       this.profileLength = Number(value);
-      this.logParameters();
     });
     this.thirdFormGroup.get('loadType')!.valueChanges.subscribe((value) => {
       this.loadType = Number(value);
-      this.logParameters();
     });
+    this.fourthFormGroup.get('profileType')!.valueChanges.subscribe((value) => {
+      this.profileType = value;
+    });
+  }
+
+  ngAfterViewInit() {
+    // Subscribe to value changes and advance the stepper
+    this.firstFormGroup.get('constructionType')!.valueChanges.subscribe((value) => {
+      this.constructionType = Number(value);
+      this.logParameters();
+
+      if (this.firstFormGroup.valid) {
+        this.myStepper.next();
+      }
+    });
+
+    this.secondFormGroup.get('profileLength')!.valueChanges.subscribe((value) => {
+      this.profileLength = Number(value);
+      this.logParameters();
+
+      // Defer the execution to allow the form validity to update
+      setTimeout(() => {
+        if (this.secondFormGroup.valid) {
+          this.myStepper.next();
+        }
+      });
+    });
+
+    this.thirdFormGroup.get('loadType')!.valueChanges.subscribe((value) => {
+      this.loadType = Number(value);
+      this.logParameters();
+
+      if (this.thirdFormGroup.valid) {
+        this.myStepper.next();
+      }
+    });
+
     this.fourthFormGroup.get('profileType')!.valueChanges.subscribe((value) => {
       this.profileType = value;
       this.logParameters();
