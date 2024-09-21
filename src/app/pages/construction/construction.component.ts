@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ConstructionSettingsComponent } from 'src/app/components/construction-settings/construction-settings.component';
 import { ConstructionResultsComponent } from 'src/app/components/construction-results/construction-results.component';
-import { VisualisationComponent } from 'src/app/components/visualisation/visualisation.component';
+import { VisualizationComponent } from 'src/app/components/visualization/visualization.component';
 
 @Component({
   selector: 'app-construction',
@@ -9,7 +9,7 @@ import { VisualisationComponent } from 'src/app/components/visualisation/visuali
   imports: [
     ConstructionSettingsComponent,
     ConstructionResultsComponent,
-    VisualisationComponent
+    VisualizationComponent
   ],
   templateUrl: './construction.component.html',
   styleUrl: './construction.component.scss'
