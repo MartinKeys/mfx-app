@@ -103,6 +103,12 @@ export class ConstructionSettingsComponent implements OnInit {
         this.setStepperIndex();
       });
     });
+
+    // // Subscribe to form value changes to update the button state
+    // this.firstFormGroup.statusChanges.subscribe(() => this.updateButtonState());
+    // this.secondFormGroup.statusChanges.subscribe(() => this.updateButtonState());
+    // this.thirdFormGroup.statusChanges.subscribe(() => this.updateButtonState());
+    // this.fourthFormGroup.statusChanges.subscribe(() => this.updateButtonState());
   }
 
   setStepperIndex() {
@@ -145,5 +151,26 @@ export class ConstructionSettingsComponent implements OnInit {
   }
   setLoadType(value: number) {
     this.thirdFormGroup.controls['loadType'].setValue(value);
+  }
+
+  // Method to check if all parameters are set
+  allParametersSet(): boolean {
+    return (
+      this.firstFormGroup.valid &&
+      this.secondFormGroup.valid &&
+      this.thirdFormGroup.valid &&
+      this.fourthFormGroup.valid
+    );
+  }
+
+  // Method to handle button click
+  onButtonClick() {
+    // Your logic when the button is clicked
+    console.log('Button clicked with parameters:', {
+      constructionType: this.constructionType,
+      profileLength: this.profileLength,
+      loadType: this.loadType,
+      profileType: this.profileType,
+    });
   }
 }
