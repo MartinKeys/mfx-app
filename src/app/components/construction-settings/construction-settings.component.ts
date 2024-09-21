@@ -4,6 +4,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module'; // Ensure this module includes necessary Angular Material modules
 import { NgFor } from '@angular/common';
+import { ConstructionCalcService } from 'src/app/services/construction-calc.service';
 
 @Component({
   selector: 'app-construction-settings',
@@ -19,6 +20,7 @@ export class ConstructionSettingsComponent implements OnInit {
   private _formBuilder = inject(FormBuilder) as NonNullableFormBuilder;
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private calcService = inject(ConstructionCalcService);
 
   private initialLoad = true;
   constructionType: number | null = null;
@@ -172,5 +174,15 @@ export class ConstructionSettingsComponent implements OnInit {
       loadType: this.loadType,
       profileType: this.profileType,
     });
+    // Ensure all parameters are set
+    if (this.allParametersSet()) {
+      // Call the service method with the parameters
+      this.calcService.proceedTestCalculation(
+        this.constructionType!,
+        this.profileLength!,
+        this.loadType!,
+        this.profileType!
+      );
+    }
   }
 }
