@@ -29,9 +29,9 @@ export const navItems: NavItem[] = [
     route: 'construction-results',
   },
   {
-    displayName: 'Visualisation',
+    displayName: 'Visualization',
     iconName: 'iconamoon:component-fill',
-    route: 'visualisation',
+    route: 'visualization',
   },
   
 ];
