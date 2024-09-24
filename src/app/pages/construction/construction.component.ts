@@ -16,20 +16,4 @@ import { VisualizationComponent } from 'src/app/components/visualization/visuali
 })
 export class ConstructionComponent {
 
-  constructor(private appRef: ApplicationRef) {
-    this.appRef.isStable.subscribe((isStable) => {
-      if (isStable) {
-        console.log('App is stable');
-        // Remove the loading screen
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-          console.log('Removing loading screen');
-          loadingScreen.style.display = 'none';
-        } else {
-          console.warn('Loading screen element not found');
-        }
-      }
-    });
-  }
-
 }

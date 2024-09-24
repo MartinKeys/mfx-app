@@ -7,19 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
-
     <!-- Lottie Player Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
-
     <!-- Loading Screen Styles -->
     <style>
       #loading-screen {
@@ -35,26 +27,45 @@
         align-items: center;
       }
     </style>
-
   </head>
   <body class="mat-typography">
-
     <!-- Loading Screen -->
     <div id="loading-screen">
       <div id="lottie-animation"></div>
     </div>
-
     <app-root></app-root>
 
+    <script>
+      // Variables to track if the app is stable and if the animation has played once
+      let animationPlayedOnce = false;
+      let appIsStable = false;
+      // Function to check both conditions and remove the loading screen
+      function checkAndRemoveLoadingScreen() {
+        if (animationPlayedOnce && appIsStable) {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+          }
+        }
+      }
+      // Initialize the Lottie animation
+      const animation = lottie.loadAnimation({
+        container: document.getElementById('lottie-animation'),
+        renderer: 'svg',
+        loop: true, // Continue looping until conditions are met
+        autoplay: true,
+        path: '/assets/graphics/lottie/loading_test.json', // Use absolute path
+      });
+      // Event listener for when the animation completes one full playthrough
+      animation.addEventListener('loopComplete', function () {
+        animationPlayedOnce = true;
+        checkAndRemoveLoadingScreen();
+      });
+      // Event listener for when the Angular app signals that it is stable
+      window.addEventListener('AppIsStable', function () {
+        appIsStable = true;
+        checkAndRemoveLoadingScreen();
+      });
+    </script>
   </body>
 </html>
-
-<script>
-  lottie.loadAnimation({
-    container: document.getElementById('lottie-animation'), // the DOM element
-    renderer: 'svg',
-    loop: true, // Set to false if you want the animation to play only once
-    autoplay: true,
-    path: 'assets/graphics/lottie/loading_test.json' // Path to your Lottie JSON file
-  });
-</script>

@@ -9,52 +9,14 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
 
-  // constructor(private appRef: ApplicationRef) {
-  //   this.appRef.isStable.subscribe((isStable) => {
-  //     if (isStable) {
-  //       // Remove the loading screen
-  //       const loadingScreen = document.getElementById('loading-screen');
-  //       if (loadingScreen) {
-  //         loadingScreen.style.display = 'none';
-  //       }
-  //     }
-  //   });
-  // }
-  // constructor(private appRef: ApplicationRef) {
-
-  //   console.log('app-root component constructor');
-  //   this.appRef.isStable.subscribe((isStable) => {
-  //     if (isStable) {
-  //       console.log('App is stable');
-  //       // Remove the loading screen
-  //       const loadingScreen = document.getElementById('loading-screen');
-  //       if (loadingScreen) {
-  //         console.log('Removing loading screen');
-  //         loadingScreen.style.display = 'none';
-  //       } else {
-  //         console.warn('Loading screen element not found');
-  //       }
-  //     }
-  //   });
-  // }
-
   constructor(private appRef: ApplicationRef) {
-    console.log('app-root component constructor');
+    //if isStable emits true, dispatch AppIsStable to hide loading animation
     this.appRef.isStable.subscribe((isStable) => {
-      console.log('isStable:', isStable);
       if (isStable) {
-        console.log('App is stable');
-        // Remove the loading screen
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-          console.log('Removing loading screen');
-          loadingScreen.style.display = 'none';
-        } else {
-          console.warn('Loading screen element not found');
-        }
+        window.dispatchEvent(new Event('AppIsStable'));
       }
     });
   }
   
-  title = 'Modernize Angular Admin Tempplate';
+  title = 'MFX APP';
 }
