@@ -1,0 +1,100 @@
+{
+  "lights": {
+    
+  },
+  "cameras": {
+    
+  },
+  "models": {
+    "wall": {
+      "path": "WALL.glb",
+      "name": "wall",
+      "type": "static",
+      "id": 1,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "castShadow": true,
+      "receiveShadow": true,
+      "clickable": false
+    },
+
+    "base": {
+      "path": "BASE.glb",
+      "name": "base",
+      "type": "static",
+      "id": 2,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "castShadow": true,
+      "receiveShadow": true,
+      "clickable": false
+    },
+    "28_30_A": {
+      "path": "28_30_A.glb",
+      "name": "28_30_A",
+      "type": "memory",
+      "id": 3,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "castShadow": true,
+      "receiveShadow": true,
+      "clickable": false
+    },
+    "28_30_B": {
+      "path": "28_30_B.glb",
+      "name": "28_30_B",
+      "type": "memory",
+      "id": 4,
+      "position": {
+        "x": 33.33,
+        "y": 0,
+        "z": 0
+      },
+      "castShadow": true,
+      "receiveShadow": true,
+      "clickable": false
+    },
+    "27_18_A": {
+      "path": "27_18_A.glb",
+      "name": "27_18_A",
+      "type": "memory",
+      "id": 3,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "castShadow": true,
+      "receiveShadow": true,
+      "clickable": false
+    },
+    "27_18_B": {
+      "path": "27_18_B.glb",
+      "name": "27_18_B",
+      "type": "memory",
+      "id": 4,
+      "position": {
+        "x": 39.5,
+        "y": 0,
+        "z": 0
+      },
+      "castShadow": true,
+      "receiveShadow": true,
+      "clickable": false
+    }
+  }
+}

@@ -1,0 +1,329 @@
+{
+  "consoles": {
+      "28_30": {
+          "200": {
+              "cameraPosition": {
+                "x": -260,
+                "y": 98,
+                "z": 325
+              },
+              "OCTarget": {
+                "x": 0,
+                "y": -20,
+                "z": 120
+              },
+              "partsCount": 5,
+              "wallScale": {
+                  "x": 1,
+                  "y": 1,
+                  "z": 1
+              },
+              "partLength": 39.5,
+              "labelFontSizePX" : "14px"
+          },
+          "300": {
+            "cameraPosition": {
+              "x": -270,
+              "y": 115,
+              "z": 420
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -20,
+              "z": 180
+            },
+            "partsCount": 7,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "15px"
+          },
+          "400": {
+            "cameraPosition": {
+              "x": -250,
+              "y": 90,
+              "z": 570
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -20,
+              "z": 290
+            },
+            "partsCount": 10,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "16px"
+          },
+          "440": {
+            "cameraPosition": {
+              "x": -250,
+              "y": 110,
+              "z": 615
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -20,
+              "z": 320
+            },
+            "partsCount": 11,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "18px"
+          },
+          "500": {
+            "cameraPosition": {
+              "x": -240,
+              "y": 110,
+              "z": 675
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -20,
+              "z": 350
+            },
+            "partsCount": 12,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "18px"
+          },
+          "600": {
+            "cameraPosition": {
+              "x": -220,
+              "y": 100,
+              "z": 730
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -20,
+              "z": 390
+            },
+            "partsCount": 13,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "18px"
+          },
+          "750": {
+            "cameraPosition": {
+              "x": -230,
+              "y": 80,
+              "z": 770
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -30,
+              "z": 410
+            },
+            "partsCount": 14,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "18px"
+          },
+          "900": {
+            "cameraPosition": {
+              "x": -270,
+              "y": 65,
+              "z": 830
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -30,
+              "z": 440
+            },
+            "partsCount": 15,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "18px"
+          }
+      },
+      "27_18": {
+        "200": {
+            "cameraPosition": {
+              "x": -260,
+              "y": 98,
+              "z": 325
+            },
+            "OCTarget": {
+              "x": 0,
+              "y": -20,
+              "z": 120
+            },
+            "partsCount": 5,
+            "wallScale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "partLength": 39.5,
+            "labelFontSizePX" : "14px"
+        },
+        "300": {
+          "cameraPosition": {
+            "x": -270,
+            "y": 115,
+            "z": 420
+          },
+          "OCTarget": {
+            "x": 0,
+            "y": -20,
+            "z": 180
+          },
+          "partsCount": 7,
+          "wallScale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
+          "partLength": 39.5,
+          "labelFontSizePX" : "15px"
+        },
+        "400": {
+          "cameraPosition": {
+            "x": -250,
+            "y": 90,
+            "z": 570
+          },
+          "OCTarget": {
+            "x": 0,
+            "y": -20,
+            "z": 290
+          },
+          "partsCount": 10,
+          "wallScale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
+          "partLength": 39.5,
+          "labelFontSizePX" : "16px"
+        },
+        "440": {
+          "cameraPosition": {
+            "x": -250,
+            "y": 110,
+            "z": 615
+          },
+          "OCTarget": {
+            "x": 0,
+            "y": -20,
+            "z": 320
+          },
+          "partsCount": 11,
+          "wallScale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
+          "partLength": 39.5,
+          "labelFontSizePX" : "18px"
+        },
+        "500": {
+          "cameraPosition": {
+            "x": -240,
+            "y": 110,
+            "z": 675
+          },
+          "OCTarget": {
+            "x": 0,
+            "y": -20,
+            "z": 350
+          },
+          "partsCount": 12,
+          "wallScale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
+          "partLength": 39.5,
+          "labelFontSizePX" : "18px"
+        },
+        "600": {
+          "cameraPosition": {
+            "x": -220,
+            "y": 100,
+            "z": 730
+          },
+          "OCTarget": {
+            "x": 0,
+            "y": -20,
+            "z": 390
+          },
+          "partsCount": 13,
+          "wallScale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
+          "partLength": 39.5,
+          "labelFontSizePX" : "18px"
+        },
+        "750": {
+          "cameraPosition": {
+            "x": -230,
+            "y": 80,
+            "z": 770
+          },
+          "OCTarget": {
+            "x": 0,
+            "y": -30,
+            "z": 410
+          },
+          "partsCount": 14,
+          "wallScale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
+          "partLength": 39.5,
+          "labelFontSizePX" : "18px"
+        },
+        "900": {
+          "cameraPosition": {
+            "x": -270,
+            "y": 65,
+            "z": 830
+          },
+          "OCTarget": {
+            "x": 0,
+            "y": -30,
+            "z": 440
+          },
+          "partsCount": 15,
+          "wallScale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
+          "partLength": 39.5,
+          "labelFontSizePX" : "18px"
+        }
+    }
+  }
+}
+  
