@@ -16,8 +16,45 @@
       rel="stylesheet"
     />
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+    <!-- Lottie Player Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+
+    <!-- Loading Screen Styles -->
+    <style>
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff; /* Adjust background color as needed */
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
   </head>
   <body class="mat-typography">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div id="lottie-animation"></div>
+    </div>
+
     <app-root></app-root>
+
   </body>
 </html>
+
+<script>
+  lottie.loadAnimation({
+    container: document.getElementById('lottie-animation'), // the DOM element
+    renderer: 'svg',
+    loop: true, // Set to false if you want the animation to play only once
+    autoplay: true,
+    path: 'assets/graphics/lottie/loading_test.json' // Path to your Lottie JSON file
+  });
+</script>

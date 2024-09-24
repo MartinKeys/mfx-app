@@ -59,8 +59,10 @@ export class ThreejsService {
     const cube = new THREE.Mesh(geometry, material);
     this.scene.add(cube);
 
-    // Start animation loop
-    this.animate();
+    // Start animation loop outside Angular's zone
+    this.ngZone.runOutsideAngular(() => {
+      this.animate();
+    });
   }
 
   private animate = () => {
