@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import * as THREE from 'three';
+import { ConstructionCalcService } from './construction-calc.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,30 @@ export class ThreejsService {
   private renderer: THREE.WebGLRenderer;
   private animationFrameId: number;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(
+    private ngZone: NgZone,
+    private calcService: ConstructionCalcService
+  ) {
+    this.calcService.calculationResults$.subscribe((results) => {
+      if (results) {
+        this.updateScene(results);
+      }
+    });
+  }
+
+  // Method to update the scene based on new data
+  updateScene(results: any): void {
+    // Remove existing objects if necessary
+    // this.scene.clear();
+
+    // Create new objects based on results
+    // Example: Update the cube's scale based on maxLoad
+    const cube = this.scene.children.find((obj) => obj instanceof THREE.Mesh) as THREE.Mesh;
+    if (cube) {
+      const scale = results.maxLoad / 100;
+      cube.scale.set(scale, scale, scale);
+    }
+  }
 
   init(container: HTMLDivElement): void {
     // Set up the scene
@@ -44,8 +68,11 @@ export class ThreejsService {
 
     // Rotate the cube (assuming it's the first child)
     const cube = this.scene.children[0];
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    if (cube) {
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+    }
+    
 
     // Render the scene
     this.renderer.render(this.scene, this.camera);
