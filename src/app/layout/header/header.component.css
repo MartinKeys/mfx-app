@@ -1,0 +1,20 @@
+.language-switcher {
+    position: relative;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown-menu.show {
+    display: block;
+}

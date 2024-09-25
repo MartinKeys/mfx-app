@@ -40,6 +40,21 @@
       width="35"
     />
   </button>
+
+  <div class="language-switcher">
+    <button class="dropdown-toggle" (click)="toggleDropdown()">
+      <img src="/assets/graphics/svgs/{{ currentLanguage }}.svg" alt="{{ currentLanguage }}" class="rounded-circle object-cover icon-35 profile-dd" width="35">
+    </button>
+    <ul class="dropdown-menu" [class.show]="dropdownOpen">
+      <li (click)="switchLanguage('cs')">
+        <img src="/assets/graphics/svgs/cs.svg" alt="Čeština" class="rounded-circle object-cover icon-35 profile-dd" width="35"> Čeština
+      </li>
+      <li (click)="switchLanguage('en')">
+        <img src="/assets/graphics/svgs/en.svg" alt="English" class="rounded-circle object-cover icon-35 profile-dd" width="35"> English
+      </li>
+    </ul>
+  </div>
+
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
     <button mat-menu-item>
       <mat-icon class="d-flex align-items-center"
