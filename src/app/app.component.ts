@@ -18,23 +18,7 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     // Set the default language
-    this.translate.setDefaultLang('cs');
-
-    // // Use the saved language or detect browser language
-    // const savedLanguage = localStorage.getItem('language');
-    // if (savedLanguage) {
-    //   this.translate.use(savedLanguage);
-    // } else {
-    //   const browserLang = this.translate.getBrowserLang();
-    //   const supportedLangs = ['cs', 'en'];
-    //   if (browserLang) {
-    //     if (supportedLangs.includes(browserLang)) {
-    //       this.translate.use(browserLang);
-    //     } else {
-    //       this.translate.use('cs');
-    //     }
-    //   }      
-    // }
+    this.translate.setDefaultLang('cs');    
 
     // Use the saved language or default to Czech
     const savedLanguage = localStorage.getItem('language') || 'cs';
