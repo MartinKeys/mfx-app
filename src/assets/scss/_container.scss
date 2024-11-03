@@ -38,9 +38,10 @@ html .mat-drawer-container {
 }
 
 .pageWrapper {
-  padding: 30px;
+  padding: 1rem;
   min-height: calc(100vh - 100px);
-
+  // height: 100vh;
+  // max-height: 100vh;
   margin: 0 auto;
   &.maxWidth {
     max-width: $boxedWidth;

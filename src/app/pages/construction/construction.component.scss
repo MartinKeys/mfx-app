@@ -1,5 +1,178 @@
-.abc {
-    width: 100px;
-    height: 100px;
-    background-color: green;
+@import "../../../assets/scss/variables";
+@import "_variables.scss";
+
+.main-container {
+    box-sizing: border-box;
+    margin: 0;
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: [hd-start] repeat(4, [col-start] 1fr [col-end]) [hd-end];
+    grid-template-rows: 3rem 2fr 1fr 1fr;
+    height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    grid-gap: 1rem;
+    grid-template-areas: "headline headline headline headline" 
+                         "scene scene scene scene"
+                         "results results results results"
+                         "options options options options";
+    align-items: stretch;
+    align-content: center;
+}
+
+// @media (min-width: 40rem) {
+//     .main-container {
+//         grid-template-columns: [hd-start] repeat(4, [col-start] 22%  [col-end]) [hd-end];
+//         grid-template-areas:    "headline headline headline headline" 
+//                                 "scene scene scene scene"
+//                                 "results results options options"
+//     }
+// }
+
+
+//varianta 1
+// @media (min-width: 60rem) {
+//     .main-container {
+//         grid-template-columns: [hd-start] repeat(4, [col-start] 22%  [col-end]) [hd-end];
+//         grid-template-areas:    "headline headline headline headline" 
+//                                 "stepper stepper scene scene"
+//                                 "results results options options"
+//     }
+// }
+
+//varianta 2
+// @media (min-width: 60rem) {
+//     .main-container {
+//         grid-template-columns: [hd-start] repeat(4, [col-start] 22%  [col-end]) [hd-end];
+//         grid-template-areas:    "headline headline headline headline" 
+//                                 " stepper stepper scene scene"
+//                                 "results results results results"
+//                                 "options options options options"
+//     }
+// }
+
+//varianta 3
+@media (min-width: 60rem) {
+    .main-container {
+        grid-template-columns: [hd-start] repeat(4, [col-start] 1fr  [col-end]) [hd-end];
+        grid-template-rows: 3rem 2fr 1fr;
+        grid-template-areas:    "headline headline headline headline" 
+                                " stepper stepper scene scene"
+                                "results results results options"
+    }
+}
+
+.main-container div:not(:has(button)){
+    width: 100%;
+    font-family: sans-serif;
+    text-align: center;
+    background-color: white;
+    color: map-get($colors, main);
+    align-content: center;
+    justify-items: center;
+    border: $border-default;
+    border-radius: $size-tiny;
+    box-shadow: $size-tiny $size-tiny map-get($colors, gray-fill);
+}
+
+.main-headline {
+    display: block;
+    font-weight: bold;
+    font-size: $size-default;
+    text-align: left;
+    padding-left: $size-default;
+    grid-area: headline;
+
+}
+
+.main-stepper {
+    display: none;
+}
+
+.main-3dscene {
+    display: block;
+    grid-area: scene;
+}
+
+// .main-3dscene__visualisation {
+//     height: 200px;
+//     width: 200px;
+//     padding: 100px;
+// }
+
+.main-results {
+    display: block;
+    grid-area: results;
+
+}
+
+.main-options {
+    display: block;
+    grid-area: options;
+}
+
+.main-stepper__wrapper-trigger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: map-get($colors, gray-fill);
+    transition: background-color 0.4s ease, width 0.3s ease;
+    transform-origin: center left;
+    color: #fff;
+    border: none;
+    border-radius: $size-default 0 0 $size-default;
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+
+    &:hover {
+        background-color: map-get($colors, main);
+        width: 4.5rem;
+}
+}
+
+.main-stepper__wrapper-trigger--button {
+    width: 100%;
+    height: 100%;
+    color: map-get($colors, main);
+    font-size: 2rem;
+    font-weight: bolder;
+    background-color: transparent;
+    border: none;
+    transition: color 0.2s ease;
+
+
+    &:hover {
+        color: map-get($colors, gray-fill);
+}
+}
+
+@media (min-width: 60rem) {
+    .main-stepper__wrapper-trigger {
+        display: none;
+}
+}
+
+@media (min-width: 60rem) {
+    .main-stepper {
+        display: none;
+}
+}
+
+.main-stepper__construction-settings {
+    justify-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: $size-default 0 0 $size-default;
+}
+
+@media (min-width: 60rem) {
+    .main-stepper {
+        display: block;
+        grid-area: stepper;
+}
 }
