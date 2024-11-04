@@ -75,7 +75,6 @@ export class ThreejsService {
       cube.rotation.y += 0.01;
     }
     
-
     // Render the scene
     this.renderer.render(this.scene, this.camera);
   };
@@ -83,11 +82,9 @@ export class ThreejsService {
   onResize(container: HTMLDivElement): void {
     const width = container.clientWidth;
     const height = container.clientHeight;
-
     this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
-
     this.renderer.setSize(width, height);
+    this.camera.updateProjectionMatrix();
   }
 
   dispose(): void {
