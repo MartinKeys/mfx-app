@@ -1,0 +1,2 @@
+-   state management u dialogu (pokud jsou zadány všechny parametry, defaultně schovat, jinak ukazovat...)
+-   popohnat Tomáše K. a zadat mu další práci
