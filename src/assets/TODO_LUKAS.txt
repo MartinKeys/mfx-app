@@ -1,4 +1,6 @@
--   pořešit výšku 3D scény na mobilu a tabletu
--   pořešit CSS Grid pro desktopy (varvat to víc vedle sebe)
--   opravit CSS u vlaječky na přepínání jazyků
+
 -   zkontrolovat změny které udělal Vojta 4.11.
+-   učesat CSS
+-   připravit layout (CSS Grid) na finální testování
+
+-   opravit CSS u vlaječky na přepínání jazyků
