@@ -54,7 +54,10 @@
         renderer: 'svg',
         loop: true, // Continue looping until conditions are met
         autoplay: true,
-        path: '/assets/graphics/lottie/loading_test.json', // Use absolute path
+
+        // path: '/mfx-testing/assets/graphics/lottie/loading_test.json', // production
+        path: 'assets/graphics/lottie/loading_test.json', // development
+
       });
       // Event listener for when the animation completes one full playthrough
       animation.addEventListener('loopComplete', function () {

@@ -36,7 +36,7 @@
     class="d-flex justify-content-center profile-btn-dd"
   >
     <img
-      src="/assets/graphics/svgs/settings-icon.svg"
+      src="assets/graphics/svgs/settings-icon.svg"
       class="rounded-circle object-cover icon-35 profile-dd"
       width="35"
     />
@@ -44,14 +44,14 @@
 
   <div class="language-switcher">
     <button class="dropdown-toggle" (click)="toggleDropdown()">
-      <img src="/assets/graphics/svgs/{{ currentLanguage }}.svg" alt="{{ currentLanguage }}" class="rounded-circle object-cover icon-35 profile-dd" width="35">
+      <img src="assets/graphics/svgs/{{ currentLanguage }}.svg" alt="{{ currentLanguage }}" class="rounded-circle object-cover icon-35 profile-dd" width="35">
     </button>
     <ul class="dropdown-menu" [class.show]="dropdownOpen">
       <li (click)="switchLanguage('cs')">
-        <img src="/assets/graphics/svgs/cs.svg" alt="Čeština" class="rounded-circle object-cover icon-35 profile-dd" width="35"> Čeština
+        <img src="assets/graphics/svgs/cs.svg" alt="Čeština" class="rounded-circle object-cover icon-35 profile-dd" width="35"> Čeština
       </li>
       <li (click)="switchLanguage('en')">
-        <img src="/assets/graphics/svgs/en.svg" alt="English" class="rounded-circle object-cover icon-35 profile-dd" width="35"> English
+        <img src="assets/graphics/svgs/en.svg" alt="English" class="rounded-circle object-cover icon-35 profile-dd" width="35"> English
       </li>
     </ul>
   </div>
