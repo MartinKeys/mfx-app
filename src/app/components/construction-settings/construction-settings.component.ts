@@ -188,4 +188,12 @@ export class ConstructionSettingsComponent implements OnInit {
       // this.threeService.loadModel();
     }
   }
+
+  //on stepper update
+    // if all 4 steps set
+      // update scene (construction, length, profile, load)
+    
+
+  
+
 }
