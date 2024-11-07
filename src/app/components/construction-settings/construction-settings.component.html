@@ -33,9 +33,27 @@
     </form>
   </mat-step>
 
-  <!-- Third Step: Load Type -->
+  <!-- Third Step: Profile Type -->
   <mat-step [stepControl]="thirdFormGroup">
     <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Select Profile Type</ng-template>
+      <mat-form-field>
+        <mat-label>Profile Type</mat-label>
+        <mat-select formControlName="profileType" required>
+          <mat-option value="28/30">28/30</mat-option>
+          <mat-option value="27/18">27/18</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>        
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="!thirdFormGroup.valid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Fourth Step: Load Type -->
+  <mat-step [stepControl]="fourthFormGroup">
+    <form [formGroup]="fourthFormGroup">
       <ng-template matStepLabel>Select Load Type</ng-template>
       <div>
         <button mat-icon-button (click)="setLoadType(1)">
@@ -48,24 +66,6 @@
           <mat-icon>filter_3</mat-icon>
         </button>
       </div>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext [disabled]="!thirdFormGroup.valid">Next</button>
-      </div>
-    </form>
-  </mat-step>
-
-  <!-- Fourth Step: Profile Type -->
-  <mat-step [stepControl]="fourthFormGroup">
-    <form [formGroup]="fourthFormGroup">
-      <ng-template matStepLabel>Select Profile Type</ng-template>
-      <mat-form-field>
-        <mat-label>Profile Type</mat-label>
-        <mat-select formControlName="profileType" required>
-          <mat-option value="28/30">28/30</mat-option>
-          <mat-option value="27/18">27/18</mat-option>
-        </mat-select>
-      </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>

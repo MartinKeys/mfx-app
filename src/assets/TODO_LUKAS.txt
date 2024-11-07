@@ -1,6 +1,11 @@
 
--   zkontrolovat změny které udělal Vojta 4.11.
--   učesat CSS
--   připravit layout (CSS Grid) na finální testování
+-   Připravit CSS Grid
 
--   opravit CSS u vlaječky na přepínání jazyků
+    (
+        - mobile/tablet/desktop ... 2 breakpointy (kde uznáš za vhodné)
+        - nejdříve prázdné divy, otestovat na různých zařízeních, pokud dobrý => commit, push
+        (tím bude jasné, že případné další problémy jsou kvůli komponentům v divech, ale že CSS Grid máme OK)
+        - dofinišovat main-stepper__wrapper-trigger 
+    )
+
+Až to bude, dej vědět.

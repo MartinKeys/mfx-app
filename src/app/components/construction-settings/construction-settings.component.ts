@@ -25,8 +25,8 @@ export class ConstructionSettingsComponent implements OnInit {
   private initialLoad = true;
   constructionType: number | null = null;
   profileLength: number | null = null;
-  loadType: number | null = null;
   profileType: string | null = null;
+  loadType: number | null = null;
 
   // Define form groups with explicit control types
   firstFormGroup = this._formBuilder.group({
@@ -34,12 +34,12 @@ export class ConstructionSettingsComponent implements OnInit {
   });
   secondFormGroup = this._formBuilder.group({
     profileLength: this._formBuilder.control<number | null>(null, Validators.required),
-  });
+  }); 
   thirdFormGroup = this._formBuilder.group({
-    loadType: this._formBuilder.control<number | null>(null, Validators.required),
+    profileType: this._formBuilder.control<string | null>(null, Validators.required),
   });
   fourthFormGroup = this._formBuilder.group({
-    profileType: this._formBuilder.control<string | null>(null, Validators.required),
+    loadType: this._formBuilder.control<number | null>(null, Validators.required),
   });
 
   ngOnInit() {
@@ -57,16 +57,16 @@ export class ConstructionSettingsComponent implements OnInit {
         this.updateQueryParams();
         this.setStepperIndex();
       }
-    });
-    this.thirdFormGroup.get('loadType')!.valueChanges.subscribe((value) => {
-      this.loadType = Number(value);
+    });   
+    this.thirdFormGroup.get('profileType')!.valueChanges.subscribe((value) => {
+      this.profileType = value;
       if (!this.initialLoad) {
         this.updateQueryParams();
         this.setStepperIndex();
       }
     });
-    this.fourthFormGroup.get('profileType')!.valueChanges.subscribe((value) => {
-      this.profileType = value;
+    this.fourthFormGroup.get('loadType')!.valueChanges.subscribe((value) => {
+      this.loadType = Number(value);
       if (!this.initialLoad) {
         this.updateQueryParams();
         this.setStepperIndex();
@@ -84,14 +84,14 @@ export class ConstructionSettingsComponent implements OnInit {
       if (params['profileLength'] !== undefined) {
         this.secondFormGroup.controls['profileLength'].setValue(Number(params['profileLength']));
         this.profileLength = Number(params['profileLength']);
+      }      
+      if (params['profileType'] !== undefined) {
+        this.thirdFormGroup.controls['profileType'].setValue(params['profileType']);
+        this.profileType = params['profileType'];
       }
       if (params['loadType'] !== undefined) {
-        this.thirdFormGroup.controls['loadType'].setValue(Number(params['loadType']));
+        this.fourthFormGroup.controls['loadType'].setValue(Number(params['loadType']));
         this.loadType = Number(params['loadType']);
-      }
-      if (params['profileType'] !== undefined) {
-        this.fourthFormGroup.controls['profileType'].setValue(params['profileType']);
-        this.profileType = params['profileType'];
       }
       // Force validity update
       this.firstFormGroup.updateValueAndValidity({ onlySelf: true });
@@ -152,7 +152,7 @@ export class ConstructionSettingsComponent implements OnInit {
     this.firstFormGroup.controls['constructionType'].setValue(value);
   }
   setLoadType(value: number) {
-    this.thirdFormGroup.controls['loadType'].setValue(value);
+    this.fourthFormGroup.controls['loadType'].setValue(value);
   }
 
   // Method to check if all parameters are set
