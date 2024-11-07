@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module'; // Ensure this module includes necessary Angular Material modules
 import { NgFor } from '@angular/common';
 import { ConstructionCalcService } from 'src/app/services/construction-calc.service';
+import { ThreejsService } from 'src/app/services/threejs.service';
 
 @Component({
   selector: 'app-construction-settings',
@@ -21,6 +22,7 @@ export class ConstructionSettingsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private calcService = inject(ConstructionCalcService);
+  private threeService = inject(ThreejsService);
 
   private initialLoad = true;
   constructionType: number | null = null;
@@ -183,6 +185,7 @@ export class ConstructionSettingsComponent implements OnInit {
         this.loadType!,
         this.profileType!
       );
+      // this.threeService.loadModel();
     }
   }
 }
