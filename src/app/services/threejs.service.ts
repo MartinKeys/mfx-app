@@ -1,7 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as THREE from 'three';
 import { GLTFLoader, DRACOLoader } from 'three-stdlib'; // stdlib provides types definition for TS
 import { ConstructionCalcService } from './construction-calc.service';
+import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,26 +18,44 @@ export class ThreejsService {
   private dracoLoader: DRACOLoader;
   private model: THREE.Group | null = null;
 
+  private modelsConfig: any;
+  private sceneConfig: any;
+
   constructor(
     private ngZone: NgZone,
-    private calcService: ConstructionCalcService
+    private calcService: ConstructionCalcService,
+    private http: HttpClient
   ) {
     this.loader = new GLTFLoader();
     this.dracoLoader = new DRACOLoader();
     this.dracoLoader.setDecoderPath('assets/draco/'); // The type definitions are now correct
     this.loader.setDRACOLoader(this.dracoLoader);
 
+    // subscribe to calculation for updating the scene
     this.calcService.calculationResults$.subscribe((results) => {
       if (results) {
         this.updateScene(results);
       }
     });
-
-    //TODO: load all configs...
   }
 
   init(container: HTMLDivElement): void {
-    // Set up the scene
+    this.loadConfigs().subscribe(
+      ([modelsConfig, sceneConfig]) => {
+        this.modelsConfig = modelsConfig;
+        this.sceneConfig = sceneConfig;
+        
+        // Now initialize your scene
+        this.setupScene(container);
+      },
+      (error) => {
+        console.error('Failed to load configs:', error);
+      }
+    );
+  }
+
+  private setupScene(container: HTMLDivElement): void {
+    // Initialize scene setup here using `this.modelsConfig` and `this.sceneConfig`
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xeeeeee);
     // Set up the camera
@@ -52,10 +72,14 @@ export class ThreejsService {
     const material = new THREE.MeshNormalMaterial();
     const cube = new THREE.Mesh(geometry, material);
     this.scene.add(cube);
+
     // Start animation loop outside Angular's zone
     this.ngZone.runOutsideAngular(() => {
       this.animate();
     });
+
+    console.log(this.sceneConfig);
+    console.log(this.modelsConfig);
   }
 
   private animate = () => {
@@ -63,6 +87,14 @@ export class ThreejsService {
     // Render the scene
     this.renderer.render(this.scene, this.camera);
   };
+
+  // Method to load JSON configurations
+  loadConfigs(): Observable<any[]> {
+    const modelsConfig$ = this.http.get('/assets/config/modelsconfig.json');
+    const sceneConfig$ = this.http.get('/assets/config/sceneconfig.json');
+
+    return forkJoin([modelsConfig$, sceneConfig$]);
+  }
 
   updateScene(results: any): void {
     // Remove existing objects if necessary

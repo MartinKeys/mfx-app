@@ -29,6 +29,7 @@ export class ConstructionSettingsComponent implements OnInit {
   profileLength: number | null = null;
   profileType: string | null = null;
   loadType: number | null = null;
+  
 
   // Define form groups with explicit control types
   firstFormGroup = this._formBuilder.group({
