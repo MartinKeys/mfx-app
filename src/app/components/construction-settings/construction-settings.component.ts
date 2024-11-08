@@ -6,6 +6,8 @@ import { MaterialModule } from 'src/app/material.module'; // Ensure this module 
 import { NgFor } from '@angular/common';
 import { ConstructionCalcService } from 'src/app/services/construction-calc.service';
 import { ThreejsService } from 'src/app/services/threejs.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-construction-settings',
@@ -15,23 +17,21 @@ import { ThreejsService } from 'src/app/services/threejs.service';
   styleUrls: ['./construction-settings.component.scss'],
 })
 export class ConstructionSettingsComponent implements OnInit {
-  @ViewChild('stepper') private myStepper: MatStepper;
-
+  @ViewChild('stepper') private parametersStepper: MatStepper;
   // Inject services
   private _formBuilder = inject(FormBuilder) as NonNullableFormBuilder;
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private calcService = inject(ConstructionCalcService);
   private threeService = inject(ThreejsService);
+  // Declare variables
+  private constructionType: number | null = null;
+  private profileLength: number | null = null;
+  private profileType: string | null = null;
+  private loadType: number | null = null;
+  private formChanges$ = new Subject<void>();
 
-  private initialLoad = true;
-  constructionType: number | null = null;
-  profileLength: number | null = null;
-  profileType: string | null = null;
-  loadType: number | null = null;
-  
-
-  // Define form groups with explicit control types
+  // Define form groups
   firstFormGroup = this._formBuilder.group({
     constructionType: this._formBuilder.control<number | null>(null, Validators.required),
   });
@@ -48,52 +48,70 @@ export class ConstructionSettingsComponent implements OnInit {
   ngOnInit() {
     // Subscribe to value changes and update parameters
     this.firstFormGroup.get('constructionType')!.valueChanges.subscribe((value) => {
-      this.constructionType = Number(value);
-      if (!this.initialLoad) {
-        this.updateQueryParams();
-        this.setStepperIndex();
+      const newValue = Number(value);
+      if (this.constructionType !== newValue) {
+        this.constructionType = newValue;
+        this.formChanges$.next();
       }
     });
     this.secondFormGroup.get('profileLength')!.valueChanges.subscribe((value) => {
-      this.profileLength = Number(value);
-      if (!this.initialLoad) {
-        this.updateQueryParams();
-        this.setStepperIndex();
+      const newValue = Number(value);
+      if (this.profileLength !== newValue) {
+        this.profileLength = newValue;
+        this.formChanges$.next();
       }
-    });   
+    });
     this.thirdFormGroup.get('profileType')!.valueChanges.subscribe((value) => {
-      this.profileType = value;
-      if (!this.initialLoad) {
-        this.updateQueryParams();
-        this.setStepperIndex();
+      if (this.profileType !== value) {
+        this.profileType = value;
+        this.formChanges$.next();
       }
     });
     this.fourthFormGroup.get('loadType')!.valueChanges.subscribe((value) => {
-      this.loadType = Number(value);
-      if (!this.initialLoad) {
-        this.updateQueryParams();
-        this.setStepperIndex();
+      const newValue = Number(value);
+      if (this.loadType !== newValue) {
+        this.loadType = newValue;
+        this.formChanges$.next();
       }
     });
+    // Subscribe to formChanges$ with debounceTime
+    this.formChanges$
+      .pipe(debounceTime(50)) // ensures that rapid changes result in only one call to checkAndUpdateScene()
+      .subscribe(() => {
+        this.updateQueryParams();
+        this.setStepperIndex();
+        this.checkAndUpdateScene();
+      });
 
     // Read query parameters from URL and set form controls accordingly
     this.route.queryParams.subscribe((params) => {
-      // console.log('Received query parameters:', params); // Debugging
       // Set form controls if parameters exist
       if (params['constructionType'] !== undefined) {
-        this.firstFormGroup.controls['constructionType'].setValue(Number(params['constructionType']));
+        this.firstFormGroup.controls['constructionType'].setValue(
+          Number(params['constructionType']),
+          { emitEvent: false } // Prevent triggering valueChanges
+        );
         this.constructionType = Number(params['constructionType']);
       }
       if (params['profileLength'] !== undefined) {
-        this.secondFormGroup.controls['profileLength'].setValue(Number(params['profileLength']));
+        this.secondFormGroup.controls['profileLength'].setValue(
+          Number(params['profileLength']),
+          { emitEvent: false }
+        );
         this.profileLength = Number(params['profileLength']);
-      }      
+      }
       if (params['profileType'] !== undefined) {
-        this.thirdFormGroup.controls['profileType'].setValue(params['profileType']);
+        this.thirdFormGroup.controls['profileType'].setValue(
+          params['profileType'],
+          { emitEvent: false }
+        );
         this.profileType = params['profileType'];
       }
       if (params['loadType'] !== undefined) {
-        this.fourthFormGroup.controls['loadType'].setValue(Number(params['loadType']));
+        this.fourthFormGroup.controls['loadType'].setValue(
+          Number(params['loadType']),
+          { emitEvent: false }
+        );
         this.loadType = Number(params['loadType']);
       }
       // Force validity update
@@ -101,35 +119,13 @@ export class ConstructionSettingsComponent implements OnInit {
       this.secondFormGroup.updateValueAndValidity({ onlySelf: true });
       this.thirdFormGroup.updateValueAndValidity({ onlySelf: true });
       this.fourthFormGroup.updateValueAndValidity({ onlySelf: true });
-      // After setting initial values, reset the flag
-      this.initialLoad = false;
+
       // Defer the call to setStepperIndex to ensure form validity has been updated
       setTimeout(() => {
         this.setStepperIndex();
       });
     });
-
-    // // Subscribe to form value changes to update the button state
-    // this.firstFormGroup.statusChanges.subscribe(() => this.updateButtonState());
-    // this.secondFormGroup.statusChanges.subscribe(() => this.updateButtonState());
-    // this.thirdFormGroup.statusChanges.subscribe(() => this.updateButtonState());
-    // this.fourthFormGroup.statusChanges.subscribe(() => this.updateButtonState());
   }
-
-  setStepperIndex() {
-    let highestValidStep = 0;
-    if (this.firstFormGroup.valid) highestValidStep = 1;
-    if (this.secondFormGroup.valid) highestValidStep = 2;
-    if (this.thirdFormGroup.valid) highestValidStep = 3;
-    if (this.fourthFormGroup.valid) highestValidStep = 3; // Last index is 3 (0-based)
-    // Mark previous steps as completed
-    this.myStepper.steps.forEach((step, index) => {
-      step.completed = index < highestValidStep;
-    });
-    // Set the stepper to the highest valid step
-    this.myStepper.selectedIndex = highestValidStep;
-  }
-
   updateQueryParams() {
     const queryParams: any = {
       constructionType: this.constructionType,
@@ -150,6 +146,20 @@ export class ConstructionSettingsComponent implements OnInit {
     });
   }
 
+  setStepperIndex() {
+    let highestValidStep = 0;
+    if (this.firstFormGroup.valid) highestValidStep = 1;
+    if (this.secondFormGroup.valid) highestValidStep = 2;
+    if (this.thirdFormGroup.valid) highestValidStep = 3;
+    if (this.fourthFormGroup.valid) highestValidStep = 3; // Last index is 3 (0-based)
+    // Mark previous steps as completed
+    this.parametersStepper.steps.forEach((step, index) => {
+      step.completed = index < highestValidStep;
+    });
+    // Set the stepper to the highest valid step
+    this.parametersStepper.selectedIndex = highestValidStep;
+  }
+
   // Methods to set values when icons are clicked
   setConstructionType(value: number) {
     this.firstFormGroup.controls['constructionType'].setValue(value);
@@ -168,33 +178,15 @@ export class ConstructionSettingsComponent implements OnInit {
     );
   }
 
-  // Method to handle button click
-  onButtonClick() {
-    // Your logic when the button is clicked
-    console.log('Button clicked with parameters:', {
-      constructionType: this.constructionType,
-      profileLength: this.profileLength,
-      loadType: this.loadType,
-      profileType: this.profileType,
-    });
-    // Ensure all parameters are set
+  // Method to check updates and call scene update
+  private checkAndUpdateScene() {
     if (this.allParametersSet()) {
-      // Call the service method with the parameters
-      this.calcService.proceedTestCalculation(
-        this.constructionType!,
-        this.profileLength!,
-        this.loadType!,
-        this.profileType!
-      );
-      // this.threeService.loadModel();
+      this.threeService.updateScene({
+        constructionType: this.constructionType!,
+        profileLength: this.profileLength!,
+        loadType: this.loadType!,
+        profileType: this.profileType!,
+      });
     }
   }
-
-  //on stepper update
-    // if all 4 steps set
-      // update scene (construction, length, profile, load)
-    
-
-  
-
 }

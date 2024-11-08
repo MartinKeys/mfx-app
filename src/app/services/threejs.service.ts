@@ -10,6 +10,7 @@ import { Observable, forkJoin } from 'rxjs';
 })
 export class ThreejsService {
 
+  // Declare variables
   private camera: THREE.PerspectiveCamera;
   private scene: THREE.Scene;
   private renderer: THREE.WebGLRenderer;
@@ -17,7 +18,6 @@ export class ThreejsService {
   private loader: GLTFLoader;
   private dracoLoader: DRACOLoader;
   private model: THREE.Group | null = null;
-
   private modelsConfig: any;
   private sceneConfig: any;
 
@@ -43,9 +43,8 @@ export class ThreejsService {
     this.loadConfigs().subscribe(
       ([modelsConfig, sceneConfig]) => {
         this.modelsConfig = modelsConfig;
-        this.sceneConfig = sceneConfig;
-        
-        // Now initialize your scene
+        this.sceneConfig = sceneConfig;        
+        // Initialize the scene
         this.setupScene(container);
       },
       (error) => {
@@ -84,30 +83,37 @@ export class ThreejsService {
 
   private animate = () => {
     this.animationFrameId = requestAnimationFrame(this.animate);   
-    // Render the scene
     this.renderer.render(this.scene, this.camera);
   };
 
-  // Method to load JSON configurations
+  // Method to load JSON configs
   loadConfigs(): Observable<any[]> {
     const modelsConfig$ = this.http.get('/assets/config/modelsconfig.json');
     const sceneConfig$ = this.http.get('/assets/config/sceneconfig.json');
-
     return forkJoin([modelsConfig$, sceneConfig$]);
   }
 
-  updateScene(results: any): void {
+  updateScene(params: {
+    constructionType: number;
+    profileLength: number;
+    loadType: number;
+    profileType: string;
+    }): void {
+
+    console.log('updateScene(), parameters:');
+    console.log(params);
+
     // Remove existing objects if necessary
     this.clearScene();
-
-    // Load the new model
+  
+    // Load the model based on parameters (adjust the model path as needed)
+    const modelPath = 'assets/models/TV_MODEL.glb';
+  
     this.loader.load(
-      'assets/models/TV_MODEL.glb', // Update with the correct path to your model
+      modelPath,
       (gltf) => {
         this.model = gltf.scene;
         this.scene.add(this.model);
-        // Apply transformations based on `results`
-        this.applyTransformations(results);
       },
       undefined,
       (error) => {
@@ -116,22 +122,18 @@ export class ThreejsService {
     );
   }
 
-  private applyTransformations(results: any): void {
-    if (this.model) {
-      // Example: Scale the model based on `results`
-      const scale = results.maxLoad / 100;
-      this.model.scale.set(scale, scale, scale);
-      // Additional transformations can be applied here
-    }
-  }
 
   private clearScene(): void {
+    if (!this.scene) {
+      console.warn('Scene not initialized yet.');
+      return;
+    } 
     this.scene.traverse((object) => {
       if (object instanceof THREE.Mesh) {
         // Dispose of geometry
         if (object.geometry) {
           object.geometry.dispose();
-        }  
+        }
         // Dispose of material
         if (object.material) {
           if (Array.isArray(object.material)) {
@@ -141,11 +143,11 @@ export class ThreejsService {
           }
         }
       }
-    }); 
+    });
     // Remove all children from the scene
     while (this.scene.children.length > 0) {
       this.scene.remove(this.scene.children[0]);
-    }
+    }  
     // Reset the model reference
     this.model = null;
   }
