@@ -26,6 +26,9 @@ export class ThreejsService {
     private calcService: ConstructionCalcService,
     private http: HttpClient
   ) {
+
+    console.log('ThreejsService constructor called');
+
     this.loader = new GLTFLoader();
     this.dracoLoader = new DRACOLoader();
     this.dracoLoader.setDecoderPath('assets/draco/'); // The type definitions are now correct
@@ -80,8 +83,7 @@ export class ThreejsService {
       this.animate();
     });
 
-    console.log(this.sceneConfig);
-    console.log(this.modelsConfig);
+
   }
 
   private animate = () => {

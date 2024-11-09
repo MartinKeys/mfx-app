@@ -1,10 +1,4 @@
 {
-  "lights": {
-    
-  },
-  "cameras": {
-    
-  },
   "models": {
     "wall": {
       "path": "WALL.glb",
