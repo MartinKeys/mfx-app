@@ -40,17 +40,20 @@ export class ThreejsService {
   }
 
   init(container: HTMLDivElement): void {
-    this.loadConfigs().subscribe(
-      ([modelsConfig, sceneConfig]) => {
-        this.modelsConfig = modelsConfig;
-        this.sceneConfig = sceneConfig;        
-        // Initialize the scene
-        this.setupScene(container);
-      },
-      (error) => {
-        console.error('Failed to load configs:', error);
-      }
-    );
+    if (this.modelsConfig && this.sceneConfig) {
+      this.setupScene(container);
+    } else {
+      this.loadConfigs().subscribe({
+        next: ([modelsConfig, sceneConfig]) => {
+          this.modelsConfig = modelsConfig;
+          this.sceneConfig = sceneConfig;
+          this.setupScene(container);
+        },
+        error: (error) => {
+          console.error('Failed to load configs:', error);
+        }
+      });
+    }
   }
 
   private setupScene(container: HTMLDivElement): void {
