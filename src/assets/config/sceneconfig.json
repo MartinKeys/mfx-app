@@ -1,6 +1,7 @@
 {
   "consoles": {
       "28_30": {
+          "modelsCount": 2,
           "200": {
               "cameraPosition": {
                 "x": -260,
@@ -163,6 +164,7 @@
           }
       },
       "27_18": {
+        "modelsCount": 2,
         "200": {
             "cameraPosition": {
               "x": -260,

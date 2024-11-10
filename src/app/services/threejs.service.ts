@@ -6,24 +6,13 @@ import { ConstructionCalcService } from './construction-calc.service';
 import { Observable, forkJoin } from 'rxjs';
 import { switchMap, tap, map } from 'rxjs/operators';
 
-// Define interfaces
-interface ModelConfig {
-  file: string;
-  name: string;
-  position: {
-    x: number;
-    y: number;
-    z: number;
-  };
-}
-
-interface ModelsConfig {
-  models: { [key: string]: ModelConfig };
-}
-
-interface SceneConfig {
-  // Define properties of your sceneConfig here if needed
-}
+// Import interfaces
+import { SceneConfig } from '../interfaces/scene-config';
+import { ConsoleConfig } from '../interfaces/console-config';
+import { LengthConfig } from '../interfaces/length-config';
+import { ModelsConfig } from '../interfaces/models-config';
+import { ModelConfig } from '../interfaces/model-config';
+import { Vector3 } from '../interfaces/vector3';
 
 @Injectable({
   providedIn: 'root'
@@ -95,13 +84,32 @@ export class ThreejsService {
     // Set up the camera
     const width = container.clientWidth;
     const height = container.clientHeight;
-    this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
     this.camera.position.z = 5;
 
     // Set up the renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(width, height);
     container.appendChild(this.renderer.domElement);
+
+    // _____ Ambient light
+    const ambientLight = new THREE.AmbientLight(0x404040, 1); // soft white light
+    ambientLight.intensity = 4;
+    this.scene.add(ambientLight);
+
+    // _____ Directional light
+    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 2);
+    const directionalLight2 = new THREE.DirectionalLight(0xFFFFFF, 1);
+    directionalLight.position.set(1, 1, 1).normalize(); // top right, facing towards the origin
+    directionalLight2.position.set(-1, 1, 1).normalize(); // top left, facing towards the origin
+    this.scene.add(directionalLight);
+    this.scene.add(directionalLight2);
+
+    // _____ Spot light
+    const spotLight = new THREE.SpotLight(0xFFFFFF, 20, undefined, undefined, undefined, 4);
+    spotLight.position.set(6.1,3.3,-10.3);
+    spotLight.castShadow = false;
+    this.scene.add(spotLight);
 
     // Start animation loop outside Angular's zone
     this.ngZone.runOutsideAngular(() => {
@@ -116,7 +124,6 @@ export class ThreejsService {
       initialModelPath,
       (gltf) => {
         const initialModel = gltf.scene;
-        initialModel.name = 'InitialModel'; // Set a name to identify it
         this.scene.add(initialModel);
       },
       undefined,
@@ -176,14 +183,51 @@ export class ThreejsService {
   }): void {
     console.log('updateScene(), parameters:', params);
 
-    // Remove existing objects except the initial model
+    // Clear the entire scene
     this.clearScene();
 
-    // Ensure models are loaded
-    if (!this.modelsConfig || Object.keys(this.loadedModels).length === 0) {
-      console.warn('Models not loaded yet.');
+    // Ensure models and scene configs are loaded
+    if (
+      !this.modelsConfig ||
+      Object.keys(this.loadedModels).length === 0 ||
+      !this.sceneConfig
+    ) {
+      console.warn('Models or sceneConfig not loaded yet.');
       return;
     }
+
+    // Map profileType to match keys in sceneConfig
+    const profileTypeKey = params.profileType.replace('/', '_'); // "28/30" => "28_30"
+    const profileLengthKey = params.profileLength.toString(); // 400 => "400"
+
+    // Retrieve the console config
+    const consoleConfig = this.sceneConfig.consoles[profileTypeKey];
+    if (!consoleConfig) {
+      console.warn(`Console config for profile type ${profileTypeKey} not found.`);
+      return;
+    }
+
+    // Retrieve the length config
+    const lengthConfigEntry = consoleConfig[profileLengthKey];
+    if (!lengthConfigEntry || typeof lengthConfigEntry === 'number') {
+      console.warn(`Length config for profile length ${profileLengthKey} not found.`);
+      return;
+    }
+    const lengthConfig = lengthConfigEntry as LengthConfig;
+
+    // Update camera position
+    this.camera.position.set(
+      lengthConfig.cameraPosition.x,
+      lengthConfig.cameraPosition.y,
+      lengthConfig.cameraPosition.z
+    );
+
+    // Update camera target
+    this.camera.lookAt(
+      lengthConfig.OCTarget.x,
+      lengthConfig.OCTarget.y,
+      lengthConfig.OCTarget.z
+    );
 
     // Determine which models to add based on parameters
     const modelsToAdd = this.getModelsToAdd(params);
@@ -202,6 +246,9 @@ export class ThreejsService {
         }
 
         this.scene.add(modelClone);
+
+        console.log('model ' + modelClone.name + ' added:');
+        console.log(modelClone);
       } else {
         console.warn(`Model ${modelName} not found in loaded models.`);
       }
@@ -214,10 +261,12 @@ export class ThreejsService {
     loadType: number;
     profileType: string;
   }): string[] {
-    // Logic to determine which models to add based on parameters
-    if (params.profileType === '27/18') {
+    // Map profileType to match keys in sceneConfig
+    const profileTypeKey = params.profileType.replace('/', '_'); // "28/30" => "28_30"
+
+    if (profileTypeKey === '27_18') {
       return ['wall', 'base', '27_18_A', '27_18_B'];
-    } else if (params.profileType === '28/30') {
+    } else if (profileTypeKey === '28_30') {
       return ['wall', 'base', '28_30_A', '28_30_B'];
     }
     // Add more conditions as needed
@@ -229,7 +278,7 @@ export class ThreejsService {
       console.warn('Scene not initialized yet.');
       return;
     }
-  
+
     // Dispose of objects
     this.scene.traverse((object) => {
       if (object instanceof THREE.Mesh) {
@@ -241,24 +290,11 @@ export class ThreejsService {
         }
       }
     });
-  
+
     // Remove all children from the scene
     while (this.scene.children.length > 0) {
       this.scene.remove(this.scene.children[0]);
     }
-  }
-
-  private disposeObject(object: THREE.Object3D): void {
-    object.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        child.geometry.dispose();
-        if (Array.isArray(child.material)) {
-          child.material.forEach((material) => material.dispose());
-        } else {
-          child.material.dispose();
-        }
-      }
-    });
   }
 
   private animate = () => {
